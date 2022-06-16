@@ -1,0 +1,18 @@
+[
+   {
+      "F": "z.apps.koenig.be",
+      "T": "https://tc.unclephil.net"
+   },
+   {
+      "F": "y.apps.koenig.be",
+      "T": "https://etnic.be{uri}"
+   },
+   {
+      "F": "g.apps.koenig.be",
+      "T": "https://www.google.com"
+   },
+   {
+      "F": "m.apps.koenig.be",
+      "T": "https://maps.google.com"
+   }
+]

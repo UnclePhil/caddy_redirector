@@ -1,0 +1,43 @@
+# ---------------------------------------------
+# GENERATED FILE 
+# DO NOT EDIT
+# ---------------------------------------------
+{
+    email koenigphil@gmail.com
+    log {
+        output stdout
+    }
+} 
+z.apps.koenig.be {
+    redir https://tc.unclephil.net
+    tls koenigphil@gmail.com
+}
+y.apps.koenig.be {
+    redir https://etnic.be{uri}
+    tls koenigphil@gmail.com
+}
+g.apps.koenig.be {
+    redir https://www.google.com
+    tls koenigphil@gmail.com
+}
+m.apps.koenig.be {
+    redir https://maps.google.com
+    tls koenigphil@gmail.com
+}
+az.apps.koenig.be {
+    redir https://tc.unclephil.net
+    tls koenigphil@gmail.com
+}
+ay.apps.koenig.be {
+    redir https://etnic.be{uri}
+    tls koenigphil@gmail.com
+}
+ag.apps.koenig.be {
+    redir https://www.google.com
+    tls koenigphil@gmail.com
+}
+am.apps.koenig.be {
+    redir https://maps.google.com
+    tls koenigphil@gmail.com
+}
+## END OF GENERATION
