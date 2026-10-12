@@ -1,0 +1,7 @@
+---
+- name: Generate and load the Caddy redirect configuration
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  roles:
+    - caddy_redirector

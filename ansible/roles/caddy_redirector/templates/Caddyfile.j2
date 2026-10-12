@@ -1,0 +1,26 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# ---------------------------------------------
+# GENERATED FILE
+# DO NOT EDIT
+# ---------------------------------------------
+{
+    email {{ caddy_email }}
+    log {
+        output stdout
+    }
+}
+{% for source_file in caddy_redirect_source_files %}
+{% for line in lookup('file', source_file).splitlines() %}
+{% set rule_line = line | trim %}
+{% if rule_line and not rule_line.startswith('#') and ',' in rule_line %}
+{% set fields = rule_line.split(',', 1) %}
+{% if fields | length == 2 and fields[1] | trim and not (fields[0] | trim | upper == 'F' and fields[1] | trim | upper == 'T') %}
+{{ fields[0] | trim }} {
+    redir {{ fields[1] | trim }}
+    tls {{ caddy_email }}
+}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endfor %}
+## END OF GENERATION

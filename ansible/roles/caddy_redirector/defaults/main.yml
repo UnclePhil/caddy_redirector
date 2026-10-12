@@ -1,0 +1,5 @@
+---
+caddy_admin_api_url: http://localhost:2019
+caddy_email: koenigphil@gmail.com
+caddy_redirect_sources_glob: "{{ playbook_dir }}/../redir/*.conf"
+caddyfile_path: "{{ playbook_dir }}/caddyfile"

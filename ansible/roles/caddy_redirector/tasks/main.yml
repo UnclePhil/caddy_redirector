@@ -1,0 +1,64 @@
+---
+- name: Find redirect source files
+  ansible.builtin.set_fact:
+    caddy_redirect_source_files: >-
+      {{ lookup('fileglob', caddy_redirect_sources_glob, wantlist=True) | sort }}
+
+- name: Check that redirect source files exist
+  ansible.builtin.assert:
+    that:
+      - caddy_redirect_source_files | length > 0
+    fail_msg: "No redirect source files matched {{ caddy_redirect_sources_glob }}"
+
+- name: Read redirect source files
+  ansible.builtin.slurp:
+    src: "{{ item }}"
+  loop: "{{ caddy_redirect_source_files }}"
+  register: caddy_redirect_source_contents
+
+- name: Validate redirect source lines
+  ansible.builtin.assert:
+    that:
+      - >-
+        item.content
+        | b64decode
+        | split('\n')
+        | map('trim')
+        | reject('equalto', '')
+        | reject('match', '^#')
+        | reject('match', '^[^,\s][^,]*,\s*\S.*$')
+        | list
+        | length == 0
+    fail_msg: >-
+      Invalid redirect rule in {{ item.source }}.
+      Expected each non-comment line to contain a source host and target URL
+      separated by a comma.
+  loop: "{{ caddy_redirect_source_contents.results }}"
+  loop_control:
+    label: "{{ item.source }}"
+
+- name: Generate the Caddyfile
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "{{ caddyfile_path }}"
+    mode: "0644"
+
+- name: Load the generated Caddyfile into Caddy
+  ansible.builtin.uri:
+    url: "{{ caddy_admin_api_url }}/load"
+    method: POST
+    headers:
+      Content-Type: text/caddyfile
+    body: "{{ lookup('file', caddyfile_path) }}"
+    body_format: raw
+
+- name: Read the active Caddy configuration
+  ansible.builtin.uri:
+    url: "{{ caddy_admin_api_url }}/config"
+    method: GET
+    return_content: true
+  register: caddy_active_config
+
+- name: Display the active Caddy configuration
+  ansible.builtin.debug:
+    var: caddy_active_config.json
