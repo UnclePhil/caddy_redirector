@@ -5,13 +5,18 @@
 - date   : 2022
 - licence: gplv2
 
-## purpose
+## Purpose
 These structure generate caddyfile for pure URL redirecting, working in http and https
 The idea is an evolution of unclephil/rewriterV4 based only to caddy v2.x 
 
 The idea is to store this in a gitlab repository, and to process some generation pipeline when one of the ./redir/*.conf is changed
 
-## requirements
+## Requirements
+
+- caddy: https://caddyserver.com
+
+  the default installation will be fine, but if you need it, you can install any plugin
+
 - csv2json : https://github.com/Andrew4d3/go-csv2json
 - tpl : https://github.com/bluebrown/go-template-cli
 - some bash tools
@@ -19,4 +24,6 @@ The idea is to store this in a gitlab repository, and to process some generation
     - grep
     - curl
 
-
+## Evolution
+- The docker version
+- The ansible version
